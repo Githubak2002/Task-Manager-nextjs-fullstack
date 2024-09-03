@@ -1,33 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Nerko+One&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+body{
+  font-family: "Playwrite GB S", cursive;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  height: 100%;
+  /* background: linear-gradient(to right, rgba(255, 192, 203, 0.356), rgba(39, 93, 255, 0.242) 65%); */
+  
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.flexCenter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.flexBetween{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* ============== */
+
+.font1{
+  font-family: "Nerko One", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.logo {
+  background: linear-gradient(45deg, #61c0ff, #8151f0,#c000c3d2); 
+  -webkit-background-clip: text; /* Clipping the background to the text */
+  -webkit-text-fill-color: transparent; /* Making the text color transparent */
+  background-clip: text;  /* Clipping the background to the text for non-WebKit browsers */
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #ff6f61, #f051b6,#c0a7d9); 
+  -webkit-background-clip: text; /* Clipping the background to the text */
+  -webkit-text-fill-color: transparent; /* Making the text color transparent */
+  background-clip: text;  /* Clipping the background to the text for non-WebKit browsers */
+}
+
+.gradient-text2 {
+  background: linear-gradient(45deg, #4b97e2, #b955e7, #9f88fb); 
+  -webkit-background-clip: text; /* Clipping the background to the text */
+  -webkit-text-fill-color: transparent; /* Making the text color transparent */
+  background-clip: text; /* Clipping the background to the text for non-WebKit browsers */
 }
