@@ -8,7 +8,11 @@ const btnCss =
 const inputCss =
   "w-3/4 h-[36px] p-2 border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-[#EDF2F7] focus:bg-transparent";
 
-export default function Home() {
+  
+  export default function Home() {
+
+  const backend_url = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const [allTodo, setAllTodo] = useState([]);
   const [task, setTask] = useState("");
 
@@ -17,7 +21,8 @@ export default function Home() {
   }, []);
 
   const getAllTodos = async () => {
-    const todos = await axios.get("/api/alltask");
+    const todos = await axios.get(`${backend_url}/api/alltask`);
+    // const todos = await axios.get("/api/alltask");
     setAllTodo(todos.data.todos);
     // console.log("All todos → ",todos.data.todos);
   };
@@ -26,7 +31,8 @@ export default function Home() {
     e.preventDefault();
     try {
       // POST request to the API route
-      const res = await axios.post("/api/postdeletetask", { task });
+      const res = await axios.post(`${backend_url}/api/postdeletetask`, { task });
+      // const res = await axios.post("/api/postdeletetask", { task });
       console.log("Response from API: ", res.data);
       setTask("");
     } catch (error) {
@@ -41,7 +47,8 @@ export default function Home() {
   const deleteTask = async (id) => {
     console.log(id);
     try {
-      const res = await axios.delete(`/api/postdeletetask/?id=${id}`);
+      const res = await axios.delete(`${backend_url}/api/postdeletetask/?id=${id}`);
+      // const res = await axios.delete(`/api/postdeletetask/?id=${id}`);
       console.log("Response from API → ", res.data);
       getAllTodos();
     } catch (error) {
@@ -55,7 +62,8 @@ export default function Home() {
 
   const deleteAllTask = async () => {
     try {
-      const res = await axios.delete("/api/deletealltasks");
+      const res = await axios.delete(`${backend_url}/api/deletealltasks`);
+      // const res = await axios.delete("/api/deletealltasks");
       console.log("All tasks removed")
       console.log("Response from API → ", res.data);
     } catch (error) {
