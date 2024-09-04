@@ -13,7 +13,7 @@ connectToDb();
 // POST request
 export async function POST(req) {
   try {
-    console.log("response → ", req);
+    // console.log("response → ", req);
     const { task } = await req.json();
     console.log("task: ", task);
     await TodoModel.create({ task });
