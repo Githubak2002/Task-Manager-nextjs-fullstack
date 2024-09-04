@@ -1,16 +1,14 @@
 "use client";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import TaskDeleteBtn from "./components/TaskDeleteBtn";
+// import TaskDeleteBtn from "./components/TaskDeleteBtn";
 
 const btnCss =
   "w-fit px-4 py-2 text-white text-sm rounded-md hover:scale-110 bg-gradient-to-r from-blue-400 to-purple-400 hover:from-blue-500 hover:to-purple-500 transition duration-300 ease-in-out focus:outline-none";
 const inputCss =
   "w-3/4 h-[36px] p-2 border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-[#EDF2F7] focus:bg-transparent";
 
-  
-  export default function Home() {
-
+export default function Home() {
   const backend_url = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   const [allTodo, setAllTodo] = useState([]);
@@ -21,18 +19,25 @@ const inputCss =
   }, []);
 
   const getAllTodos = async () => {
-    const todos = await axios.get(`${backend_url}/api/alltask`);
+    try {
+      const res = await axios.get(`${backend_url}/api/alltask`);
+      setAllTodo(res.data.todos);
+      console.log("All todos → ",res.data);
+    } catch (error) {
+      console.error(error);
+    }
+
+    // const todos = await axios.get(`${backend_url}/api/alltask`);
     // const todos = await axios.get("/api/alltask");
-    setAllTodo(todos.data.todos);
-    // console.log("All todos → ",todos.data.todos);
+    // setAllTodo(todos.data.todos);
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      // POST request to the API route
-      const res = await axios.post(`${backend_url}/api/postdeletetask`, { task });
-      // const res = await axios.post("/api/postdeletetask", { task });
+      const res = await axios.post(`${backend_url}/api/postdeletetask`, {
+        task,
+      });
       console.log("Response from API: ", res.data);
       setTask("");
     } catch (error) {
@@ -47,7 +52,9 @@ const inputCss =
   const deleteTask = async (id) => {
     console.log(id);
     try {
-      const res = await axios.delete(`${backend_url}/api/postdeletetask/?id=${id}`);
+      const res = await axios.delete(
+        `${backend_url}/api/postdeletetask/?id=${id}`
+      );
       // const res = await axios.delete(`/api/postdeletetask/?id=${id}`);
       console.log("Response from API → ", res.data);
       getAllTodos();
@@ -64,10 +71,12 @@ const inputCss =
     try {
       const res = await axios.delete(`${backend_url}/api/deletealltasks`);
       // const res = await axios.delete("/api/deletealltasks");
-      console.log("All tasks removed")
+      console.log("All tasks removed");
       console.log("Response from API → ", res.data);
     } catch (error) {
-      console.error("Error deleting all tasks → ",error.response?.data || error.message
+      console.error(
+        "Error deleting all tasks → ",
+        error.response?.data || error.message
       );
     }
     getAllTodos();
@@ -132,7 +141,14 @@ const inputCss =
             </div>
           );
         })}
-        {allTodo?.length !== 0 && <button onClick={deleteAllTask} className="text-xs p-2 transition-all hover:text-red-500 border border-black hover:border-red-500 rounded-sm mt-5">Delete All</button> } 
+        {allTodo?.length !== 0 && (
+          <button
+            onClick={deleteAllTask}
+            className="text-xs p-2 transition-all hover:text-red-500 border border-black hover:border-red-500 rounded-sm mt-5"
+          >
+            Delete All
+          </button>
+        )}
       </main>
     </section>
   );
