@@ -75,9 +75,14 @@ export default function Home() {
   };
 
   useEffect(() => {
+    // const fetchTodos = async () => {
+    //   const todos = await getAllTodos();
+    //   setAllTodo(todos);
+    // };
+    // fetchTodos(); 
     getAllTodos();
   }, []);
-  
+
   return (
     <section className="min-h-[70vh]">
       {/* === pop up === */}
