@@ -14,10 +14,6 @@ export default function Home() {
   const [allTodo, setAllTodo] = useState([]);
   const [task, setTask] = useState("");
 
-  useEffect(() => {
-    getAllTodos();
-  }, []);
-
   const getAllTodos = async () => {
     try {
       const res = await axios.get(`${backend_url}/api/alltask`);
@@ -26,10 +22,6 @@ export default function Home() {
     } catch (error) {
       console.error(error);
     }
-
-    // const todos = await axios.get(`${backend_url}/api/alltask`);
-    // const todos = await axios.get("/api/alltask");
-    // setAllTodo(todos.data.todos);
   };
 
   const submitHandler = async (e) => {
@@ -82,6 +74,10 @@ export default function Home() {
     getAllTodos();
   };
 
+  useEffect(() => {
+    getAllTodos();
+  }, []);
+  
   return (
     <section className="min-h-[70vh]">
       {/* === pop up === */}
