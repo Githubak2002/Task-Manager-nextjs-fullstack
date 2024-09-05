@@ -13,8 +13,8 @@ const inputCss =
   "w-3/4 h-[36px] p-2 border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-[#EDF2F7] focus:bg-transparent";
 
 export default function Home() {
-  const backend_url = "https://nextjs-task-manager.netlify.app";
-  // const backend_url = process.env.NEXT_PUBLIC_BACKEND_URL;
+  // const backend_url = "https://nextjs-task-manager.netlify.app";
+  const backend_url = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   const [allTodo, setAllTodo] = useState([]);
   const [task, setTask] = useState("");
