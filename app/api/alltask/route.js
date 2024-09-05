@@ -32,6 +32,7 @@ connectToDb();
 // Simple GET request - API to get all tasks
 
 
+
 export async function GET(req) {
   try {
     const todos = await TodoModel.find({});

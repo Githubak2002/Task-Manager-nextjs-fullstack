@@ -1,109 +1,69 @@
 "use client";
 export const dynamic = "force-dynamic";
 
-// export const revalidate = 0;
 
+import useSWR, { mutate } from "swr";
 import axios from "axios";
-import { useState, useEffect } from "react";
-// import TaskDeleteBtn from "./components/TaskDeleteBtn";
+import { useState } from "react";
 
-const btnCss =
-  "w-fit px-4 py-2 text-white text-sm rounded-md hover:scale-110 bg-gradient-to-r from-blue-400 to-purple-400 hover:from-blue-500 hover:to-purple-500 transition duration-300 ease-in-out focus:outline-none";
-const inputCss =
-  "w-3/4 h-[36px] p-2 border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-[#EDF2F7] focus:bg-transparent";
+// Fetcher function for SWR
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function Home() {
-  // const backend_url = "https://nextjs-task-manager.netlify.app";
   const backend_url = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-  const [allTodo, setAllTodo] = useState([]);
+  const { data, error, mutate: mutateTodos } = useSWR(`${backend_url}/api/alltask`, fetcher);
   const [task, setTask] = useState("");
 
-  const getAllTodos = async () => {
-    try {
-      const res = await axios.get(`${backend_url}/api/alltask`);
-      // console.log("res : ",res);
-      setAllTodo(res.data.todos);
-      console.log("All todos → ",res.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+  console.log("data fetched → ",data);
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${backend_url}/api/postdeletetask`, {
-        task,
-      });
-      console.log("Response from API: ", res.data);
+      await axios.post(`${backend_url}/api/postdeletetask`, { task });
+      console.log("posted new task")
       setTask("");
+      // Revalidate the data after posting
+      mutateTodos(); // This re-fetches the data
     } catch (error) {
       console.error(
         "Error submitting task:",
         error.response?.data || error.message
       );
     }
-    getAllTodos();
   };
 
   const deleteTask = async (id) => {
-    console.log(id);
     try {
-      const res = await axios.delete(
-        `${backend_url}/api/postdeletetask/?id=${id}`
-      );
-      // const res = await axios.delete(`/api/postdeletetask/?id=${id}`);
-      console.log("Response from API → ", res.data);
-      getAllTodos();
+      await axios.delete(`${backend_url}/api/postdeletetask/?id=${id}`);
+      console.log("removed task")
+      // Revalidate the data after deleting a task
+      mutateTodos(); // This re-fetches the data
     } catch (error) {
       console.error(
         "Error deleting task → ",
         error.response?.data || error.message
       );
     }
-    getAllTodos();
   };
 
   const deleteAllTask = async () => {
     try {
-      const res = await axios.delete(`${backend_url}/api/deletealltasks`);
-      // const res = await axios.delete("/api/deletealltasks");
-      console.log("All tasks removed");
-      console.log("Response from API → ", res.data);
+      await axios.delete(`${backend_url}/api/deletealltasks`);
+      // Revalidate the data after deleting all tasks
+      mutateTodos(); // This re-fetches the data
     } catch (error) {
       console.error(
         "Error deleting all tasks → ",
         error.response?.data || error.message
       );
     }
-    getAllTodos();
   };
 
-  useEffect(() => {
-    const fetchTodos = async () => {
-      const res = await axios.get(`${backend_url}/api/alltask`);
-      // console.log("res : ",res);
-      setAllTodo(res.data.todos);
-    };
-    fetchTodos(); 
-    // getAllTodos();
-  }, []);
+  if (error) return <div>Error loading tasks</div>;
+  if (!data) return <div>Loading...</div>;
 
   return (
     <section className="min-h-[70vh]">
-      {/* === pop up === */}
-      {/* <main className="hidden top-0 left-0 h-full w-full flexCenter bg-opacity-50 backdrop-blur-sm">
-
-        <div className="flexCenter flex-col p-4 border border-black rounded-">
-          <h2 className="text-2xl"> Delete the task </h2>
-          <div className="flex gap-x-5 ">
-            <button className="">No</button>
-            <button className="">Delete</button>
-          </div>
-        </div>
-      </main> */}
-
       <h2 className="gradient-text2 font1 text-4xl text-center py-5 ">
         TASK MANAGER
       </h2>
@@ -114,41 +74,34 @@ export default function Home() {
       >
         <input
           type="text"
-          // name="task"
           required
           value={task}
           onChange={(e) => setTask(e.target.value)}
           placeholder="Enter your Task"
-          className={inputCss}
+          className="w-3/4 h-[36px] p-2 border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-[#EDF2F7] focus:bg-transparent"
         />
 
-        <button type="submit" className={btnCss}>
+        <button type="submit" className="w-fit px-4 py-2 text-white text-sm rounded-md hover:scale-110 bg-gradient-to-r from-blue-400 to-purple-400 hover:from-blue-500 hover:to-purple-500 transition duration-300 ease-in-out focus:outline-none">
           Add
         </button>
       </form>
 
       <main className="flexCenter flex-col mt-8 border-gray-300 border-2 rounded-lg px-3 py-7 md:mx-auto mx-3 max-w-[490px] ">
-        {allTodo?.length !== 0 && (
+        {data.todos.length !== 0 && (
           <h2 className="gradient-text text-lg font-bold pb-3">
             All your todos
           </h2>
         )}
-        {allTodo.map((ele, i) => {
-          return (
-            <div
-              key={i}
-              className={`border-gray-300 ${
-                allTodo.length == i - 1 ? "border-none" : "border-b"
-              } ${
-                i === allTodo.length - 1 ? "border-none" : "border-b"
-              } px-3 py-3 flexBetween md:w-[460px] w-full mx-auto text-xs`}
-            >
-              <h2>{ele.task} </h2>
-              <button onClick={() => deleteTask(ele._id)}>Delete</button>
-            </div>
-          );
-        })}
-        {allTodo?.length !== 0 && (
+        {data.todos.map((ele, i) => (
+          <div
+            key={ele._id}
+            className={`border-gray-300 ${data.todos.length === i + 1 ? "border-none" : "border-b"} px-3 py-3 flexBetween md:w-[460px] w-full mx-auto text-xs`}
+          >
+            <h2>{ele.task} </h2>
+            <button onClick={() => deleteTask(ele._id)}>Delete</button>
+          </div>
+        ))}
+        {data.todos.length !== 0 && (
           <button
             onClick={deleteAllTask}
             className="text-xs p-2 transition-all hover:text-red-500 border border-black hover:border-red-500 rounded-sm mt-5"
