@@ -1,5 +1,8 @@
 "use client";
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
+
+export const revalidate = 0;
+
 import axios from "axios";
 import { useState, useEffect } from "react";
 // import TaskDeleteBtn from "./components/TaskDeleteBtn";
