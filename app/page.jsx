@@ -81,12 +81,13 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // const fetchTodos = async () => {
-    //   const todos = await getAllTodos();
-    //   setAllTodo(todos);
-    // };
-    // fetchTodos(); 
-    getAllTodos();
+    const fetchTodos = async () => {
+      const res = await axios.get(`${backend_url}/api/alltask`);
+      // console.log("res : ",res);
+      setAllTodo(res.data.todos);
+    };
+    fetchTodos(); 
+    // getAllTodos();
   }, []);
 
   return (
