@@ -1,6 +1,7 @@
 import connectDb from "@/lib/mongoDB";
 import TodoModel from "@/Models/Todo";
 import { NextResponse } from "next/server";
+export const revalidate = 0;
 
 // connecting to DB
 const connectToDb = async () => {
