@@ -1,7 +1,7 @@
 import connectDb from "@/lib/mongoDB";
 import TodoModel from "@/Models/Todo";
 import { NextResponse } from "next/server";
-export const revalidate = 0;
+// export const revalidate = 0;
 
 // connecting to DB
 const connectToDb = async () => {
@@ -32,7 +32,7 @@ connectToDb();
 // Simple GET request - API to get all tasks
 export async function GET(req) {
   try {
-    const todos = await TodoModel.find();
+    const todos = await TodoModel.find({});
     
     const response = NextResponse.json({
       todos,
@@ -49,7 +49,7 @@ export async function GET(req) {
     console.error(error);
     
     const response = NextResponse.json({
-      msg: "Error fetching todos",
+      msg: "Error fetching tasks",
       status: "error",
     });
     

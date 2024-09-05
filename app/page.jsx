@@ -1,7 +1,7 @@
 "use client";
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -21,6 +21,7 @@ export default function Home() {
   const getAllTodos = async () => {
     try {
       const res = await axios.get(`${backend_url}/api/alltask`);
+      // console.log("res : ",res);
       setAllTodo(res.data.todos);
       console.log("All todos → ",res.data);
     } catch (error) {
@@ -141,7 +142,6 @@ export default function Home() {
               } px-3 py-3 flexBetween md:w-[460px] w-full mx-auto text-xs`}
             >
               <h2>{ele.task} </h2>
-              {/* <TaskDeleteBtn id={ele._id} /> */}
               <button onClick={() => deleteTask(ele._id)}>Delete</button>
             </div>
           );
