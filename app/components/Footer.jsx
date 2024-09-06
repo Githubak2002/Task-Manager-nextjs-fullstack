@@ -4,7 +4,7 @@ import React from 'react';
 const Footer = () => {
   return (
     <footer className="my-10">
-        <h2 className="text-center text-xs ">Next js fullstack todo app</h2>
+        <h2 className="text-center text-xs ">Next_js 💖 Fullstack </h2>
     </footer>
   );
 };

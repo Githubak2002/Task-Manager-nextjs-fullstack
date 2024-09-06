@@ -7,29 +7,29 @@ const NavBar = () => {
     <nav className="p-4 flex justify-between items-center">
       {/* Logo */}
       <Link href="/" className="text-xl font-black cursor-pointer logo ">
-        Ak
+        Ak_Here
       </Link>
 
       {/* Menu Items */}
       <div className="space-x-4">
         <Link
-          href="#"
+          href="/"
           className="cursor-pointer transition-all hover:font-bold"
         >
-          Home
+          Tasks
         </Link>
         <Link
-          href="#"
+          href="/counter"
           className="cursor-pointer transition-all hover:font-bold"
         >
-          Contact
+          Couter
         </Link>
-        <Link
+        {/* <Link
           href="#"
           className="cursor-pointer transition-all hover:font-bold"
         >
           About
-        </Link>
+        </Link> */}
       </div>
     </nav>
   );
