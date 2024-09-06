@@ -1,6 +1,9 @@
 import connectDb from "@/lib/mongoDB";
 import TodoModel from "@/Models/Todo";
 import { NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
+
 // export const revalidate = 0;
 
 // connecting to DB
