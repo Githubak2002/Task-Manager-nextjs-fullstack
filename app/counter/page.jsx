@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useCounterStore } from "@/lib/store";
 
-const page = () => {
+const Page = () => {
 
   const [popup,setPopup] = useState(false);
 
@@ -77,4 +77,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -13,7 +13,7 @@ const NavBar = () => {
       {/* Menu Items */}
       <div className="space-x-4">
         <Link
-          href="/"
+          href="/taskmanager"
           className="cursor-pointer transition-all hover:font-bold"
         >
           Tasks

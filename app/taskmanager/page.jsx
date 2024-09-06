@@ -10,7 +10,7 @@ import { useStore } from "@/lib/store";
 // Fetcher function for SWR
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
-export default function Home() {
+export default function Page() {
   const backend_url = process.env.NEXT_PUBLIC_BACKEND_URL;
   const {
     data,
