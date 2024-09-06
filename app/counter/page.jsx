@@ -40,7 +40,7 @@ const Page = () => {
       </main>
 
 
-      <h1 className=" text-sm">
+      <h1 className=" text-sm text-center">
         Simple counter using{" "}
         <span className="font-bold gradient-text2"> ZUSTAND </span> State
         managment
@@ -53,7 +53,7 @@ const Page = () => {
         >
           +
         </button>
-        <h2 className="border-slate-500 border p-2 w-12 text-center font-bold">
+        <h2 className="border-slate-500 border-y p-2 w-12 text-center font-bold">
           {count}
         </h2>
         <button
