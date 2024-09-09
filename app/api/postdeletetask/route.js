@@ -10,7 +10,7 @@ const connectToDb = async () => {
 connectToDb();
 
 
-// POST request
+// POST request - posting a new task
 export async function POST(req) {
   try {
     // console.log("response → ", req);
@@ -24,7 +24,7 @@ export async function POST(req) {
   }
 }
 
-// DELETE request
+// DELETE request - deleting a task
 export async function DELETE(req) {
   try {
     const id = req.nextUrl.searchParams.get("id");

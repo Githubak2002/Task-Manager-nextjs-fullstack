@@ -1,0 +1,51 @@
+import nextConnect from 'next-connect';
+import multer from 'multer';
+import { v2 as cloudinary } from 'cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import connectMongo from '@/lib/connectMongo';
+import ImageModel from '@/models/ImageModel'; // Your MongoDB model
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'nextjs_uploads', // Folder in Cloudinary
+  },
+});
+
+const upload = multer({ storage: storage });
+
+const apiRoute = nextConnect({
+  onError(error, req, res) {
+    res.status(501).json({ error: `Sorry something happened! ${error.message}` });
+  },
+  onNoMatch(req, res) {
+    res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
+  },
+});
+
+apiRoute.use(upload.array('images')); // For multiple images
+
+apiRoute.post(async (req, res) => {
+  await connectMongo(); // Connect to MongoDB
+
+  const imageUrls = req.files.map((file) => file.path); // Get the Cloudinary URLs
+
+  // Save the image URLs to MongoDB
+  const savedImages = await ImageModel.create({ urls: imageUrls });
+
+  res.status(200).json(savedImages);
+});
+
+export default apiRoute;
+
+export const config = {
+  api: {
+    bodyParser: false, // Disallow body parsing, since multer handles it
+  },
+};

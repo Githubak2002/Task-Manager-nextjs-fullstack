@@ -4,8 +4,10 @@ export const dynamic = "force-dynamic";
 import useSWR, { mutate } from "swr";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useStore } from "@/lib/store";
-// import TaskDeleteBtn from "./components/TaskDeleteBtn";
+import { useStore } from "@/lib/store.js";
+
+// import TaskDeleteBtn from "../components/TaskDeleteBtn";
+
 
 // Fetcher function for SWR
 const fetcher = (url) => axios.get(url).then((res) => res.data);

@@ -30,6 +30,7 @@ const NavBar = () => {
         >
           About
         </Link> */}
+        
       </div>
     </nav>
   );

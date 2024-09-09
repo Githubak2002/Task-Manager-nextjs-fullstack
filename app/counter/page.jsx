@@ -26,15 +26,15 @@ const Page = () => {
 
       {/* ====== Reset counter pop up ====== */}
       <main className={`fixed top-0 left-0 h-full w-full flex items-center justify-center bg-opacity-50 backdrop-blur-sm ${!popup ? 'hidden' : 'absolute'}`}>
-        <div className="flexCenter flex-col py-10 px-14 border shadow-2xl border-black rounded-lg bg-white">
-          <h2 className="text-2xl mt-2 mb-6"> Delete the task </h2>
-          <div className="flex gap-x-5 w-full">
+        <div className="flexCenter flex-col py-10 max-w-[280px] px-6 shadow-2xl border-none rounded-md bg-[#fff]">
+          <h2 className="text-md mt-2 mb-6 text-center leading-7"> Are you sure you want to Reset the counter? </h2>
+          <div className="flexCenter gap-x-5 w-full">
             <button 
               onClick={() => setPopup(false)}
-             className=" rounded-md border-slate-700 border p-2 w- w-1/2">No</button>
+             className="rounded-md border-slate-700 border p-2 w-1/3">No</button>
             <button 
               onClick={resetHandler}
-            className="rounded-md border-slate-700 border p-2 w-1/2">Delete</button>
+            className="rounded-md border-slate-700 border p-2 w-1/3">Reset</button>
           </div>
         </div>
       </main>
