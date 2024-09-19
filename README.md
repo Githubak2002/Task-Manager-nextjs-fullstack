@@ -31,3 +31,25 @@ To run this project locally, follow these steps:
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/nextjs-task-manager.git
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+
+### NavBar Update
+We need to update a Link in the NavBar to ensure seamless navigation.
+
+Image Upload Integration
+We have successfully integrated Cloudinary for image uploads. You can access the image upload feature at the following URL - 
+<br>
+[aknextjs-task-manager.vercel.app/uploadimg](aknextjs-task-manager.vercel.app/uploadimg)
+
+
